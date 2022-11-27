@@ -1,6 +1,6 @@
 # R_projektit
 RStudio projektikansio
 
-(Lelu)projekteja
+(Lelu)projekteja:
 
 - Game of Thrones lautapelin kierrosaikojen mallintaminen
