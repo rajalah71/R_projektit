@@ -61,6 +61,8 @@ legend(1, 2.5, legend=c("1. asteen", "2. asteen", "3. asteen"),
 
 ## Mallinvalinta
 
+Vertaillaan sovitettuja malleja toisiinsa.
+
 ``` r
 anova(model1, model2)
 ```
@@ -103,7 +105,7 @@ anova(model2, model3)
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Edetään siis mallilla 3, eli $\log(y-5) = a+b_1x+b_2x^2+b_3x^3$.
+Edetään siis mallilla 3, eli $\log(y-5) = \log(a)+b_1x+b_2x^2+b_3x^3$.
 
 ## Sovitteet alkuperäiseen kuvaajaan
 
@@ -171,8 +173,10 @@ legend(46, 43, legend=c("1. asteen", "2. asteen", "3. asteen"),
 Ja parhaan mallin plottaus vielä yksinään.
 
 ``` r
-plot(x,y, ylim = c(0,46), xlab = "Toistot", ylab = "Aika sekunteina", main = "Speedclimb, paras sovite")
+plot(x,y, ylim = c(0,46), xlab = "Toistot", ylab = "Aika sekunteina", main = "Speedclimb, paras sovite ja asymptootti")
 lines(x,(y_hat_3)+5, col = "blue")
+abline(h=5, col = "red")
+legend(43, 43, legend = c("Sovite", "Asymptootti"), col = c("blue", "red"), lty = c(1,1), cex = 0.8)
 ```
 
 ![](speedclimb_malli_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
@@ -201,6 +205,12 @@ summary(model3)
     ## Residual standard error: 0.1544 on 54 degrees of freedom
     ## Multiple R-squared:  0.8601, Adjusted R-squared:  0.8523 
     ## F-statistic: 110.6 on 3 and 54 DF,  p-value: < 2.2e-16
+
+``` r
+print(c("exp(a):",exp(model3[["coefficients"]][["(Intercept)"]])))
+```
+
+    ## [1] "exp(a):"          "34.9365519164864"
 
 ``` r
 par(mfrow =c(2,2))
