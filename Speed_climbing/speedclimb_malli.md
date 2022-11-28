@@ -103,7 +103,7 @@ anova(model2, model3)
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Edetään siis mallilla 3, eli $\log(y-5) = a* (b1*x+b2*x^2+b3*x^3)$
+Edetään siis mallilla 3, eli $\log(y-5) = a+b_1x+b_2x^2+b_3x^3$.
 
 ## Sovitteet alkuperäiseen kuvaajaan
 
