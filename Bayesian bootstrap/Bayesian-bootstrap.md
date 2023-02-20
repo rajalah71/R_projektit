@@ -34,7 +34,7 @@ results = as_tibble(bootstrap(data, {function(x) mean(x)}, 100000))
 cat("Bootstrap keskiarvojen varianssin estimaatti:",var(results))
 ```
 
-    ## Bootstrap keskiarvojen varianssin estimaatti: 0.7771849
+    ## Bootstrap keskiarvojen varianssin estimaatti: 0.7727396
 
 ![](Bayesian-bootstrap_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
@@ -53,11 +53,9 @@ Painojen jakaumaksi voidaan valita disktreetin multinomijakauman sijaan
 jatkuva Dirichlet-jakauma,
 $\frac{1}{n}W^{(K)} \sim \text{Dirichlet}( 1, (\frac{1}{n}\ldots\frac{1}{n}))$,
 jolle pätee $\sum_{i=1}^nw_i = 1$, ja vastaavasti
-$\sum_{i=1}^nnw_i = n$. Dirichlet-jakauma voidaan ajatella
+$\sum_{i=1}^nnw_i = n$. Dirichlet-jakaumaa voidaan käyttää
 epäinformatiivisena priorina alkuperäiselle datalle tehdylle
-estimaatille, ja näin saadaan parametrin posteriorijakauma.
-$p(W|X) \propto p(X|W)p(W)$, missä $X$ on alkuperäinen data ja $W$ on
-käytetyt painot.
+estimaatille, ja näin saadaan parametrin estimaatin posteriorijakauma.
 
 ### Esimerkki
 
@@ -84,7 +82,7 @@ results_bayes = as_tibble(bootstrap_bayes(data, {function(x) mean(x)}, 100000))
 cat("Bootstrap keskiarvojen varianssin bayes estimaatti:",var(results_bayes))
 ```
 
-    ## Bootstrap keskiarvojen varianssin bayes estimaatti: 0.699841
+    ## Bootstrap keskiarvojen varianssin bayes estimaatti: 0.6938652
 
 ![](Bayesian-bootstrap_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 

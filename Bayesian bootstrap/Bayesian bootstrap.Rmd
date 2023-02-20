@@ -53,7 +53,7 @@ Bootstrapin voidaan ajatella toimivan myös niin, että jokaiselle alkuperäisen
 
 ### Bayesiläinen bootstrap
 
-Painojen jakaumaksi voidaan valita disktreetin multinomijakauman sijaan jatkuva Dirichlet-jakauma, $\frac{1}{n}W^{(K)} \sim \text{Dirichlet}( 1, (\frac{1}{n}\ldots\frac{1}{n}))$, jolle pätee $\sum_{i=1}^nw_i = 1$, ja vastaavasti $\sum_{i=1}^nnw_i = n$. Dirichlet-jakauma voidaan ajatella epäinformatiivisena priorina alkuperäiselle datalle tehdylle estimaatille, ja näin saadaan parametrin posteriorijakauma. $p(W|X) \propto p(X|W)p(W)$, missä $X$ on alkuperäinen data ja $W$ on käytetyt painot.
+Painojen jakaumaksi voidaan valita disktreetin multinomijakauman sijaan jatkuva Dirichlet-jakauma, $\frac{1}{n}W^{(K)} \sim \text{Dirichlet}( 1, (\frac{1}{n}\ldots\frac{1}{n}))$, jolle pätee $\sum_{i=1}^nw_i = 1$, ja vastaavasti $\sum_{i=1}^nnw_i = n$. Dirichlet-jakaumaa voidaan käyttää epäinformatiivisena priorina alkuperäiselle datalle tehdylle estimaatille, ja näin saadaan parametrin estimaatin posteriorijakauma. 
 
 ### Esimerkki
 
