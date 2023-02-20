@@ -1,0 +1,91 @@
+---
+title: "Bayesiläinen bootstrap"
+author: "Johannes Rajala"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(LaplacesDemon)
+library(ggplot2)
+library(tidyverse)
+```
+
+### Johdanto
+
+Perinteinen bootstrap on uudelleenotantamenetelmä, jossa $n$:n pituisesta datasta tehdään $n$:n pituinen uudelleenotanta palauttamalla. Uudelleenotantia käytetään usein estimoimaan alkuperäisestä datasta lasketun estimaatin jakaumaa. 
+
+### Esimerkki
+
+Lasketaan esimerkkidatan keskiarvo ja keskiarvon estimaatin bootstrap jakauma.
+
+```{r}
+data = c(1,2,4,4,5,8,2,2,9)
+
+bootstrap = function(data, f, n){
+  boot_results = c() # Vektori bootstrap tuloksia varten
+  
+  for(i in (1:n)){
+    boot_results[i] = f(sample(data, length(data), replace = TRUE)) # Iteroidaan n kertaa ja lasketaan joka kerta funktion arvo bootstrap otokselle 
+  }
+  
+  return(boot_results) # Palautetaan bootstrap otoksille lasketut funktion arvot 
+}
+```
+
+```{r}
+results = as_tibble(bootstrap(data, {function(x) mean(x)}, 100000))
+cat("Bootstrap keskiarvojen varianssin estimaatti:",var(results))
+```
+
+```{r echo=FALSE}
+ggplot(data = results, aes(x=value)) +
+  geom_histogram(bins = 40, col = "black", fill = "white") +
+  geom_vline(xintercept = c(quantile(results$value, c(0.025, 0.975))), col = "red", linewidth = 0.6) +
+   ggtitle("Keskiarvon bootstrap-jakauma 2.5% ja 97.5% kvantiileilla")
+  
+```
+
+### Bootstrap painoilla
+
+Bootstrapin voidaan ajatella toimivan myös niin, että jokaiselle alkuperäisen otoksen havainnolle $y_i$ arvotaan kokonaislukupaino $w_i$ siten, että $\sum_{i=1}^n w_i = n$, tai vastaavasti $\sum_{i=1}^n \frac{1}{n}w_i = 1$. Boootstrap otoksen $B^{(k)}$ painot noudattavat siis multinomijakaumaa, $W^{(K)} \sim \text{Multinomi}(1, n, (\frac{1}{n},\ldots,\frac{1}{n}))$.
+
+### Bayesiläinen bootstrap
+
+Painojen jakaumaksi voidaan valita disktreetin multinomijakauman sijaan jatkuva Dirichlet-jakauma, $\frac{1}{n}W^{(K)} \sim \text{Dirichlet}( 1, (\frac{1}{n}\ldots\frac{1}{n}))$, jolle pätee $\sum_{i=1}^nw_i = 1$, ja vastaavasti $\sum_{i=1}^nnw_i = n$. Dirichlet-jakauma voidaan ajatella epäinformatiivisena priorina alkuperäiselle datalle tehdylle estimaatille, ja näin saadaan parametrin posteriorijakauma. $p(W|X) \propto p(X|W)p(W)$, missä $X$ on alkuperäinen data ja $W$ on käytetyt painot.
+
+### Esimerkki
+
+Tehdään sama esimerkki kuin alussa, mutta bayselaisella bootstrapilla.
+
+```{r}
+data = c(1,2,4,4,5,8,2,2,9) # sama data kuin ensimmäisessä esimerkissä
+
+bootstrap_bayes = function(data, f, n){
+  boot_results = c() # Vektori bootstrap tuloskia varten
+  len = length(data) # datan pituus
+  
+  for(i in (1:n)){
+    weights = rdirichlet(1, rep(1, len))*len # lasketaan painot dirichlet jakaumasta
+    boot_results[i] = f(data*weights) # kerrotaan data painoilla
+  }
+  
+  return(boot_results) # Palautetaan bootstrap otoksille lasketut funktion arvot 
+}
+```
+
+```{r}
+results_bayes = as_tibble(bootstrap_bayes(data, {function(x) mean(x)}, 100000))
+cat("Bootstrap keskiarvojen varianssin bayes estimaatti:",var(results_bayes))
+```
+
+```{r echo=FALSE}
+ggplot(data = results_bayes, aes(x=value)) +
+  geom_histogram(bins = 40, col = "black", fill = "white") +
+  geom_vline(xintercept = c(quantile(results_bayes$value, c(0.025, 0.975))), col = "red", linewidth = 0.6) +
+   ggtitle("Keskiarvon bayesiläinen bootstrap-jakauma 2.5% ja 97.5% kvantiileilla")
+  
+```
+
+Saatu posteriorijakauma on paljon sileämpi ja varianssin estimaatti on pienempi.
