@@ -52,8 +52,8 @@ ggplot(data = results, aes(x=value)) +
 Bootstrapin voidaan ajatella toimivan myös niin, että jokaiselle alkuperäisen otoksen havainnolle $y_i$ arvotaan kokonaislukupaino $w_i$ siten, että $\sum_{i=1}^n w_i = n$. Boootstrap otoksen $B^{(k)}$ painot noudattavat siis multinomijakaumaa, $W^{(K)} \sim \text{Multinomi}(n, (\frac{1}{n},\ldots,\frac{1}{n}))$, jonka pistetodennäköisyysfunktio on yleisessä muodossa:
 
 \[
-f(w_1\ldots w_k;n,p_1\ldots p_k) = p(W_1=w_1, \ldots, W_k=w_k)=\begin{cases} 
-\frac{n!}{w_1!\ldots w_k!}p_1^{w_1}\ldots p_k^{w_k} &,\text{ kun } \sum_{i=1}^{k}w_i =n \\
+f(w_1 \ldots w_k ; n , p_1 \ldots p_k) = p( W_1 = w_1, \ldots, W_k = w_k)= \begin{cases} 
+\frac{n!} {w_1! \ldots w_k!}p_1^{w_1} \ldots p_k^{w_k} & , \text{ kun } \sum_{i=1}^{k} w_i = n \\
 0 & , \text{ muuten.}
 \end{cases}
 \]
@@ -61,8 +61,8 @@ f(w_1\ldots w_k;n,p_1\ldots p_k) = p(W_1=w_1, \ldots, W_k=w_k)=\begin{cases}
 Tämä voidaan esittää myös gammafunktion avulla: 
 
 \[
-f(w_1\ldots w_k;p_1\ldots p_k)=\begin{cases} 
-\frac{\Gamma(\sum_{i=1}^kw_i+1)}{\prod_{i=1}^k\Gamma(w_i+1)} \prod_{i=1}^kp_i^{k_i} &,\text{ kun } \sum_{i=1}^{k}w_i =1 \\
+f(w_1 \ldots w_k ; p_1 \ldots p_k ) = \begin{cases} 
+\frac{ \Gamma( \sum_{i=1}^k w_i + 1)}{ \prod_{i=1}^k \Gamma(w_i+1)} \prod_{i=1}^k p_i^{k_i} & , \text{ kun } \sum_{i=1}^{k} w_i = 1 \\
 0 & , \text{ muuten.}
 \end{cases}
 \]
@@ -74,8 +74,8 @@ Kokonaislukujen sijaan painoiksi voidaan valita positiiviset reaalipainot, jotka
 Dirichlet-jakauman tiheysfunktio voidaan esittää muodossa:
 
 \[
-f(w_1\ldots w_k;\alpha_1\ldots \alpha_k)=\begin{cases} 
-\frac{\Gamma(\sum_{i=1}^k \alpha_i)}{\prod_{i=1}^k\Gamma(\alpha_i)} \prod_{i=1}^kw_i^{\alpha_i-1} &,\text{ kun } \sum_{i=1}^{k}w_i =1 \\
+f(w_1 \ldots w_k ; \alpha_1 \ldots \alpha_k) = \begin{cases} 
+\frac{ \Gamma( \sum_{i=1}^k \alpha_i)}{ \prod_{i=1}^k \Gamma( \alpha_i)} \prod_{i=1}^k w_i^{ \alpha_i - 1} & , \text{ kun } \sum_{i=1}^{k} w_i = 1 \\
 0 & , \text{ muuten.}
 \end{cases}
 \]
