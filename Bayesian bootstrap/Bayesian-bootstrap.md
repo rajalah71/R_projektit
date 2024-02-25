@@ -1,7 +1,7 @@
 Bayesiläinen bootstrap
 ================
 Johannes Rajala
-2023-02-20
+2023-03-28
 
 ### Johdanto
 
@@ -34,7 +34,11 @@ results = as_tibble(bootstrap(data, {function(x) mean(x)}, 100000))
 cat("Bootstrap-keskiarvojen varianssi:",var(results))
 ```
 
+<<<<<<< HEAD
     ## Bootstrap-keskiarvojen varianssi: 0.7763187
+=======
+    ## Bootstrap keskiarvojen varianssin estimaatti: 0.7794019
+>>>>>>> e5694c599e276dfb74ed2690ed201b0e05c3e528
 
 ![](Bayesian-bootstrap_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
@@ -42,9 +46,9 @@ cat("Bootstrap-keskiarvojen varianssi:",var(results))
 
 Bootstrapin voidaan ajatella toimivan myös niin, että jokaiselle
 alkuperäisen otoksen havainnolle $y_i$ arvotaan kokonaislukupaino $w_i$
-siten, että $\sum_{i=1}^n w_i = n$, tai vastaavasti
-$\sum_{i=1}^n \frac{1}{n}w_i = 1$. Boootstrap otoksen $B^{(k)}$ painot
+siten, että $\sum_{i=1}^n w_i = n$. Boootstrap otoksen $B^{(k)}$ painot
 noudattavat siis multinomijakaumaa,
+<<<<<<< HEAD
 $W^{(k)} \sim \text{Multinomi}(1, n, (\frac{1}{n},\ldots,\frac{1}{n}))$.
 
 ### Bayesiläinen bootstrap
@@ -53,6 +57,44 @@ Painojen jakaumaksi voidaan valita disktreetin multinomijakauman sijaan
 jatkuva Dirichlet-jakauma,
 $\frac{1}{n}W^{(k)} \sim \text{Dirichlet}( 1, (1,\ldots,1))$, jolle
 pätee $\sum_{i=1}^nw_i = 1$, ja vastaavasti $\sum_{i=1}^nnw_i = n$.
+=======
+$W^{(K)} \sim \text{Multinomi}(n, (\frac{1}{n},\ldots,\frac{1}{n}))$,
+jonka pistetodennäköisyysfunktio on yleisessä muodossa:
+
+$$
+f(w_1 \ldots w_k ; n , p_1 \ldots p_k) = p( W_1 = w_1, \ldots, W_k = w_k)= \begin{cases} 
+\frac{n!} {w_1! \ldots w_k!}p_1^{w_1} \ldots p_k^{w_k} & , \text{ kun } \sum_{i=1}^{k} w_i = n \\
+0 & , \text{ muuten.}
+\end{cases}
+$$
+
+Tämä voidaan esittää myös gammafunktion avulla:
+
+$$
+f(w_1 \ldots w_k ; p_1 \ldots p_k ) = \begin{cases} 
+\frac{ \Gamma( \sum_{i=1}^k w_i + 1)}{ \prod_{i=1}^k \Gamma(w_i+1)} \prod_{i=1}^k p_i^{k_i} & , \text{ kun } \sum_{i=1}^{k} w_i = 1 \\
+0 & , \text{ muuten.}
+\end{cases}
+$$
+
+### Bayesiläinen bootstrap
+
+Kokonaislukujen sijaan painoiksi voidaan valita positiiviset
+reaalipainot, jotka summautuvat yhteen. Painojen jakaumaksi voidaan siis
+valita disktreetin multinomijakauman sijaan jatkuva Dirichlet-jakauma,
+$\frac{1}{n}W^{(K)} \sim \text{Dirichlet}( 1, (\frac{1}{n}\ldots\frac{1}{n}))$,
+jolle pätee $\sum_{i=1}^nw_i = n$.
+
+Dirichlet-jakauman tiheysfunktio voidaan esittää muodossa:
+
+$$
+f(w_1 \ldots w_k ; \alpha_1 \ldots \alpha_k) = \begin{cases} 
+\frac{ \Gamma( \sum_{i=1}^k \alpha_i)}{ \prod_{i=1}^k \Gamma( \alpha_i)} \prod_{i=1}^k w_i^{ \alpha_i - 1} & , \text{ kun } \sum_{i=1}^{k} w_i = 1 \\
+0 & , \text{ muuten.}
+\end{cases}
+$$
+
+>>>>>>> e5694c599e276dfb74ed2690ed201b0e05c3e528
 Dirichlet-jakaumaa voidaan käyttää epäinformatiivisena priorina
 alkuperäiselle datalle tehdylle estimaatille, ja näin saadaan parametrin
 estimaatin posteriorijakauma.
@@ -83,7 +125,11 @@ results_bayes = as_tibble(bootstrap_bayes(data, {function(x) mean(x)}, 100000, a
 cat("Bayesiläisten bootstrap-keskiarvojen varianssi:",var(results_bayes))
 ```
 
+<<<<<<< HEAD
     ## Bayesiläisten bootstrap-keskiarvojen varianssi: 0.7012525
+=======
+    ## Bootstrap keskiarvojen varianssin bayes estimaatti: 0.7025447
+>>>>>>> e5694c599e276dfb74ed2690ed201b0e05c3e528
 
 ![](Bayesian-bootstrap_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 

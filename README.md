@@ -6,3 +6,4 @@ RStudio projektikansio
 - Game of Thrones lautapelin kierrosaikojen mallintaminen
 - Nopeuskiipeilyaikojen mallintaminen
 - Hylkäysotanta-algoritmin toteuttaminen
+- Bayesiläisen saapasremmiotannan toteutus
