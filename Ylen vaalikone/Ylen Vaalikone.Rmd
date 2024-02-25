@@ -1,0 +1,55 @@
+---
+title: "Ylen vaalikone"
+author: "Johannes Rajala"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+vaalikone <- read.csv("C:/Users/Johannes/Downloads/Eduskuntavaalit 2023 vastausdata - Kaikki vaalipiirit - anonyymi.csv")
+vaalikone = na.omit(vaalikone)
+library(dbscan)
+library(pcaPP)
+library(robustbase)
+library(corrplot)
+library(ggplot2)
+library(tidyverse)
+```
+
+```{r}
+x = vaalikone[,-c(1,2)]
+#x_scaled = apply(x,2, function(x) (x-median(x))/mad(x))
+y = vaalikone[,2]
+```
+
+```{r}
+#mcd = covMcd(x, raw.only = TRUE, alpha = 0.75)
+```
+
+```{r}
+#corrplot(cov[,1], cor = TRUE)
+```
+
+
+```{r}
+projection = PCAproj(x)
+```
+
+```{r}
+proj = as_tibble(projection[["scores"]])
+```
+
+```{r}
+plt <- ggplot(proj, aes(x = Comp.1, y = Comp.2, colour = y)) +
+  geom_point()
+plt
+```
+
+```{r}
+dbscan(x, eps = 8, minPts = 30)
+```
+```{r}
+
+```
+
