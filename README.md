@@ -7,3 +7,4 @@ RStudio projektikansio
 - Nopeuskiipeilyaikojen mallintaminen
 - Hylkäysotanta-algoritmin toteuttaminen
 - Bayesiläisen saapasremmiotannan toteutus
+ Saapuminen lautapelitapahtumaan
